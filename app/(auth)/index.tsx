@@ -1,41 +1,24 @@
-import { Colors } from '@/constants/Colors'
-import { useState, type FC } from 'react'
-import { Button, Text, View } from 'react-native'
-import { ClerkAPIError } from '@clerk/types'
+
+
+import { Image, SafeAreaView, View } from 'react-native'
+
+
 import * as WebBrowser from 'expo-web-browser'
-import * as AuthSession from 'expo-auth-session'
-import { isClerkAPIResponseError, useSSO } from '@clerk/clerk-expo'
+import Text from '@/components/ui/text'
+
 
 WebBrowser.maybeCompleteAuthSession()
 
-const Index = ({ }) => {
-    const { startSSOFlow } = useSSO()
-    const handleGoogleSignIn = async () => {
-        try {
-            const { createdSessionId, setActive } = await startSSOFlow({ strategy: 'oauth_google', redirectUrl: AuthSession.makeRedirectUri() })
+const Index = () => {
 
-            if (createdSessionId) {
-                setActive!({ session: createdSessionId })
-            } else {
-                // There's no session
-                console.log('No Session')
-            }
-        } catch (error) {
-            if (isClerkAPIResponseError(error)) {
-                setErrors(error.errors)
-            } else {
-                console.error(error)
-            }
 
-        }
-    }
-    const [errors, setErrors] = useState<ClerkAPIError[]>()
-    return <View style={{ backgroundColor: "black", margin: 20, borderRadius: 12, }}>
-        <Button title='Sign in with Google' color={'white'} onPress={handleGoogleSignIn} />
-        {errors?.map((error) => (
-            <Text>{error.message}</Text>
-        ))}
-    </View>
+
+    return <SafeAreaView style={{ flex: 1, justifyContent: "center", alignItems: "center", marginHorizontal: 10 }}>
+        <View>
+            <Image source={require('../../assets/images/logo.png')} style={{ margin: 'auto' }} />
+            <Text variant='h3' align='center'>  What creative fields would you like to see work from?</Text>
+        </View>
+    </SafeAreaView>
 }
 
 export default Index
