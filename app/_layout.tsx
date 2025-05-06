@@ -3,6 +3,10 @@ import { tokenCache } from '@clerk/clerk-expo/token-cache';
 import { Slot, SplashScreen } from 'expo-router';
 import { useEffect } from 'react';
 import { useFonts } from 'expo-font';
+import { createTamagui, TamaguiProvider } from 'tamagui'
+import { defaultConfig } from '@tamagui/config/v4' // for quick config install this
+
+const config = createTamagui(defaultConfig)
 
 function AppContent() {
   const { isLoaded: sessionLoaded } = useSession();
@@ -29,7 +33,10 @@ export default function RootLayout() {
 
   return (
     <ClerkProvider tokenCache={tokenCache}>
-      <AppContent />
+      <TamaguiProvider config={config}>
+
+        <AppContent />
+      </TamaguiProvider>
     </ClerkProvider>
   );
 }
